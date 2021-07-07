@@ -97,7 +97,7 @@ def parse_rule(rule: str) -> Rule:
     )
 
 
-def main():
+def main() -> None:
 
     TARGET_COLOUR = "shiny gold"
 
