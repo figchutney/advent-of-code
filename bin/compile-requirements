@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# build-isolation should be the default in 5.0.0
+
+pip-compile --no-emit-index-url --build-isolation $@ -q
+cat requirements.in | pip-compile --no-emit-index-url --build-isolation $@ -q --output-file=requirements.txt -

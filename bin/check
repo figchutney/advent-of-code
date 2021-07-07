@@ -1,0 +1,36 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"/../
+
+echo "Running checks..."
+echo
+
+echo "----------------------------------------------------------------"
+echo "> Imports: isort"
+echo
+isort --check-only .
+
+echo "----------------------------------------------------------------"
+echo "> Formatting: black"
+echo
+black --check .
+
+echo "----------------------------------------------------------------"
+echo "> Linting: flake8"
+echo
+flake8 .
+
+echo "----------------------------------------------------------------"
+echo "> Security (Code): bandit"
+echo
+bandit -r . --exclude ./.env,./venv -lll -iii
+
+echo "----------------------------------------------------------------"
+echo "> Security (Dependencies): safety"
+echo
+safety check --full-report --file=requirements-dev.txt
+
+echo "----------------------------------------------------------------"
+echo "> Types: mypy"
+echo
+mypy .

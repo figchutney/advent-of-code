@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cd "$(dirname "$0")"/../
+
+echo "Running formatting..."
+
+echo "----------------------------------------------------------------"
+echo "> Imports: isort"
+echo
+isort .
+
+echo "----------------------------------------------------------------"
+echo "> Formatting: black"
+echo
+black --exclude '.env|venv' .
