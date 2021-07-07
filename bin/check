@@ -28,7 +28,7 @@ bandit -r . --exclude ./.env,./venv -lll -iii
 echo "----------------------------------------------------------------"
 echo "> Security (Dependencies): safety"
 echo
-safety check --full-report --file=requirements-dev.txt
+safety check --full-report --file=requirements.txt
 
 echo "----------------------------------------------------------------"
 echo "> Types: mypy"
