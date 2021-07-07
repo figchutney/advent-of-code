@@ -98,15 +98,11 @@ def parse_rule(rule: str) -> Rule:
 
 
 def main() -> None:
-
     TARGET_COLOUR = "shiny gold"
-
     rules = parse_all_rules(rules=RULES)
-
     result = find_how_many_bags_can_contain_colour(
         rules=rules, target_colour=TARGET_COLOUR
     )
-
     print(f"{TARGET_COLOUR} bags can eventually be contained by {result} bags")
 
 
