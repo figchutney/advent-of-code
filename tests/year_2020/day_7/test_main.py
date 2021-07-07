@@ -3,6 +3,10 @@ from puzzles.year_2020.day_7 import main
 from .data import DUMMY_RULES_PARSED, DUMMY_RULES_RAW
 
 
+def test_main():
+    
+
+
 def test_find_how_many_bags_can_contain_colour():
     dummy_target_colour = "shiny gold"
     assert (

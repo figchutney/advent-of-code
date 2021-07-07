@@ -97,12 +97,18 @@ def parse_rule(rule: str) -> Rule:
     )
 
 
-if __name__ == "__main__":
+def main():
+
+    TARGET_COLOUR = "shiny gold"
+
     rules = parse_all_rules(rules=RULES)
-    target_colour = "shiny gold"
 
     result = find_how_many_bags_can_contain_colour(
-        rules=rules, target_colour=target_colour
+        rules=rules, target_colour=TARGET_COLOUR
     )
 
-    print(f"{target_colour} bags can eventually be contained by {result} bags")
+    print(f"{TARGET_COLOUR} bags can eventually be contained by {result} bags")
+
+
+if __name__ == "__main__":
+    main()
