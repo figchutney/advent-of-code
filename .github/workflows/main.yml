@@ -15,7 +15,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install -r requirements-dev.txt
+        python -m pip install -r requirements.txt
     - name: Check imports with `isort`
       run: |
         isort --check-only .
@@ -30,7 +30,7 @@ jobs:
         bandit -r . -lll -iii
     - name: Check dependency security with `safety`
       run: |
-        safety check --full-report --file=requirements-dev.txt
+        safety check --full-report --file=requirements.txt
     - name: Check type safety with `mypy`
       run: |
         mypy .
