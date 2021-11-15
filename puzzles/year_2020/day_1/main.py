@@ -1,83 +1,54 @@
-from typing import Dict, List, Tuple
+from pathlib import Path
+from typing import Set, Tuple
 
-from .data import EXPENSE_REPORT
 
-
-def make_values_dict(values: List[int]) -> Dict[int, int]:
-    return {value: value for value in values}
+def _make_values_set() -> Set[int]:
+    with open(Path(__file__).resolve().parent / "data.txt") as f:
+        return {int(value) for value in f}
 
 
 def _find_pair_that_sum_to_target(
-    values: List[int],
-    values_dict: Dict[int, int],
+    values: Set[int],
     target: int,
 ) -> Tuple[int, int]:
     for value in values:
-        try:
-            return (value, values_dict[target - value])
-        except KeyError:
-            pass
+        if (2020 - value) in values:
+            return (value, (2020 - value))
     raise ValueError(f"Uh oh! No two values sum to {target} :'(")
 
 
 def _find_triplet_that_sum_to_target(
-    values: List[int],
-    values_dict: Dict[int, int],
+    values: Set[int],
     target: int,
 ) -> Tuple[int, int, int]:
-    for value in values:
-        try:
-            return (value,) + _find_pair_that_sum_to_target(
-                values=values,
-                values_dict=values_dict,
-                target=target - value,
-            )
-        except (ValueError, KeyError):
-            pass
+    for value_outer in values:
+        for value_inner in values:
+            if (2020 - value_outer - value_inner) in values:
+                return (
+                    value_outer,
+                    value_inner,
+                    (2020 - value_outer - value_inner),
+                )
     raise ValueError(f"Uh oh! No three values sum to {target} :'(")
 
 
-# PART 1
-
-
-def multiply_2_values_that_sum_to_2020(
-    values: List[int],
-    values_dict: Dict[int, int],
-) -> int:
+def solve_part_1(values: Set[int]) -> int:
     value_1, value_2 = _find_pair_that_sum_to_target(
-        values=values,
-        values_dict=values_dict,
-        target=2020,
+        values=values, target=2020
     )
     return value_1 * value_2
 
 
-# PART 2
-
-
-def multiply_3_values_that_sum_to_2020(
-    values: List[int],
-    values_dict: Dict[int, int],
-) -> int:
+def solve_part_2(values: Set[int]) -> int:
     value_1, value_2, value_3 = _find_triplet_that_sum_to_target(
-        values=values,
-        values_dict=values_dict,
-        target=2020,
+        values=values, target=2020
     )
     return value_1 * value_2 * value_3
 
 
 if __name__ == "__main__":
 
-    values_dict = make_values_dict(values=EXPENSE_REPORT)
+    values = _make_values_set()
 
-    part_1_answer = multiply_2_values_that_sum_to_2020(
-        values=EXPENSE_REPORT,
-        values_dict=make_values_dict(values=EXPENSE_REPORT),
-    )
-    part_2_answer = multiply_3_values_that_sum_to_2020(
-        values=EXPENSE_REPORT,
-        values_dict=make_values_dict(values=EXPENSE_REPORT),
-    )
-    print(f"Part 1 Answer: {part_1_answer}")
-    print(f"Part 2 Answer: {part_2_answer}")
+    print(f"Part 1 Answer: {solve_part_1(values=values)}")
+    print(f"Part 2 Answer: {solve_part_2(values=values)}")
