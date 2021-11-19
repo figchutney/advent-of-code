@@ -36,4 +36,4 @@ jobs:
         mypy .
     - name: Run tests with pytest
       run: |
-        pytest tests --cov --cov-fail-under=100
+        pytest tests --cov --cov-fail-under=75
