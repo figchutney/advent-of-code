@@ -5,31 +5,42 @@ from typing import List
 
 @dataclass
 class Password:
-    required_letter: str
-    letter_count_min: int
-    letter_count_max: int
+    policy_letter: str
+    constraint_lower: int
+    constraint_upper: int
     password: str
 
 
 def _parse_password_and_policy(value: str) -> Password:
 
     range, letter, password = value.replace(":", "").split(" ")
-    min, max = range.split("-")
+    lower, upper = range.split("-")
 
     return Password(
-        required_letter=letter,
-        letter_count_min=int(min),
-        letter_count_max=int(max),
+        policy_letter=letter,
+        constraint_lower=int(lower),
+        constraint_upper=int(upper),
         password=password,
     )
 
 
-def _is_password_valid(password: Password) -> bool:
+def _is_letter_count_within_constraints(p: Password) -> bool:
 
     return (
-        password.letter_count_min
-        <= password.password.count(password.required_letter)
-        <= password.letter_count_max
+        p.constraint_lower
+        <= p.password.count(p.policy_letter)
+        <= p.constraint_upper
+    )
+
+
+def _is_letter_in_one_constraint_position(p: Password) -> bool:
+
+    return (
+        p.password[p.constraint_lower - 1] == p.policy_letter
+        and p.password[p.constraint_upper - 1] != p.policy_letter
+    ) or (
+        p.password[p.constraint_lower - 1] != p.policy_letter
+        and p.password[p.constraint_upper - 1] == p.policy_letter
     )
 
 
@@ -41,7 +52,16 @@ def make_passwords() -> List[Password]:
 def solve_part_1(passwords: List[Password]) -> int:
 
     return [
-        _is_password_valid(password=password) for password in passwords
+        _is_letter_count_within_constraints(p=password)
+        for password in passwords
+    ].count(True)
+
+
+def solve_part_2(passwords: List[Password]) -> int:
+
+    return [
+        _is_letter_in_one_constraint_position(p=password)
+        for password in passwords
     ].count(True)
 
 
@@ -50,3 +70,4 @@ if __name__ == "__main__":
     passwords = make_passwords()
 
     print(solve_part_1(passwords=passwords))
+    print(solve_part_2(passwords=passwords))
