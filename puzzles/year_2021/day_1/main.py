@@ -20,6 +20,5 @@ if __name__ == "__main__":
 
     # PART 1
     print(count_depth_increases(depths=depths))
-
     # PART 2
     print(count_depth_increases(depths=(get_window_sums(depths=depths))))
