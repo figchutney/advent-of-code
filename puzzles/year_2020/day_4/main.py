@@ -1,5 +1,5 @@
-from pathlib import Path
 import re
+from pathlib import Path
 
 
 def parse_passport_details() -> list[dict[str, str]]:
