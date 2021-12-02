@@ -37,12 +37,12 @@ def is_passport_data_valid(passport: dict[str, str]) -> bool:
             len(iyr) == 4 and 2010 <= int(iyr) <= 2020,
             len(eyr) == 4 and 2020 <= int(eyr) <= 2030,
             (
-                (hgt[-2:] == "cm" and 150 <= int(hgt[:-2]) <= 193)
-                or (hgt[-2:] == "in" and 59 <= int(hgt[:-2]) <= 76)
+                (hgt.endswith("cm") and 150 <= int(hgt[:-2]) <= 193)
+                or (hgt.endswith("in") and 59 <= int(hgt[:-2]) <= 76)
             ),
             re.fullmatch(r"#[(0-9)|(a-f)]{6}", hcl),
             ecl in ("amb", "blu", "brn", "gry", "grn", "hzl", "oth"),
-            re.fullmatch(r"\d{9}", pid),
+            len(pid) == 9 and pid.isdigit(),
         )
     )
 
